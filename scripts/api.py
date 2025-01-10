@@ -10,6 +10,7 @@ from PIL import Image
 from io import BytesIO
 import base64
 from tagger.interrogator import Interrogator
+from tagger.interrogators import interrogators
 
 from modules.api.models import *
 from modules.api import api
@@ -21,6 +22,7 @@ def civitdown_api(_: gr.Blocks, app: FastAPI):
         undesired: str = Body("none", title='Undesired Tags'),
     ):
         im = Image.open(BytesIO(base64.b64decode(image)))
+        interrogator = interrogators["wd-eva02-large-tagger-v3"]
         result = interrogator.interrogate(im)
 
         theres = Interrogator.postprocess_tags(
