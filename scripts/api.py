@@ -26,10 +26,10 @@ def civitdown_api(_: gr.Blocks, app: FastAPI):
         	
         	return Interrogator.postprocess_tags(
         	    result[1],
-        	    threshold=args.threshold,
+        	    threshold=0.4,
         	    escape_tag=tag_escape,
         	    replace_underscore=tag_escape,
-        	    exclude_tags=exclude_tags)
+        	    exclude_tags=undesired)
 
         return "Success"
 try:
