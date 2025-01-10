@@ -10,8 +10,6 @@ import modules.shared
 from modules.api.models import *
 from modules.api import api
 
-tt = "87d3586af21cc19bbb16a36164aa34a9"
-
 def civitdown_api(_: gr.Blocks, app: FastAPI):
     @app.post("/mikww/tagimg")
     async def civitdown(
