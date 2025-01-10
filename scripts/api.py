@@ -6,6 +6,10 @@ import os
 import gradio as gr
 import subprocess
 import modules.shared
+from PIL import Image
+from io import BytesIO
+import base64
+from tagger.interrogator import Interrogator
 
 from modules.api.models import *
 from modules.api import api
@@ -16,7 +20,17 @@ def civitdown_api(_: gr.Blocks, app: FastAPI):
         image: str = Body("none", title='Image'),
         undesired: str = Body("none", title='Undesired Tags'),
     ):
-        
+        def image_interrogate():
+        	im = Image.open(BytesIO(base64.b64decode(image)))
+        	result = interrogator.interrogate(im)
+        	
+        	return Interrogator.postprocess_tags(
+        	    result[1],
+        	    threshold=args.threshold,
+        	    escape_tag=tag_escape,
+        	    replace_underscore=tag_escape,
+        	    exclude_tags=exclude_tags)
+
         return "Success"
 try:
     import modules.script_callbacks as script_callbacks
