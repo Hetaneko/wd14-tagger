@@ -20,18 +20,19 @@ def civitdown_api(_: gr.Blocks, app: FastAPI):
         image: str = Body("none", title='Image'),
         undesired: str = Body("none", title='Undesired Tags'),
     ):
-        def image_interrogate():
-        	im = Image.open(BytesIO(base64.b64decode(image)))
-        	result = interrogator.interrogate(im)
-        	
-        	return Interrogator.postprocess_tags(
-        	    result[1],
-        	    threshold=0.4,
-        	    escape_tag=False,
-        	    replace_underscore=False,
-        	    exclude_tags=undesired)
+        im = Image.open(BytesIO(base64.b64decode(image)))
+        result = interrogator.interrogate(im)
 
-        return "Success"
+        theres = Interrogator.postprocess_tags(
+            result[1],
+            threshold=0.4,
+            escape_tag=False,
+            replace_underscore=False,
+            exclude_tags=undesired)
+        
+        json = { "Tags": theres }
+
+        return json
 try:
     import modules.script_callbacks as script_callbacks
 
