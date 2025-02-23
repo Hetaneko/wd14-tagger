@@ -71,7 +71,7 @@ class Interrogator:
 
     def __init__(self, name: str) -> None:
         self.name = name
-        self.providers = ['CUDAExecutionProvider', 'CPUExecutionProvider']
+        self.providers = [('CUDAExecutionProvider',{'device_id':1}), 'CPUExecutionProvider']
 
     def load(self):
         raise NotImplementedError()
