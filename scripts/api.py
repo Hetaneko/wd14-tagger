@@ -22,7 +22,7 @@ def civitdown_api(_: gr.Blocks, app: FastAPI):
         undesired: str = Body("none", title='Undesired Tags'),
     ):
         im = Image.open(BytesIO(base64.b64decode(image)))
-        interrogator = interrogators["wd-vit-large-tagger-v3"]
+        interrogator = interrogators["wd-eva02-large-tagger-v3"]
         result = interrogator.interrogate(im)
 
         theres = Interrogator.postprocess_tags(
